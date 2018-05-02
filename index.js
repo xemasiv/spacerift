@@ -36,9 +36,9 @@ app.use(bodyParser.urlencoded({
 const useragent = require('useragent');
 const geoip = require('geoip-lite');
 
+const awaiting = new Map();
+
 app.use('/', (req, res) => {
-  debug('request received.');
-  debug(req.body);
   const agent = useragent.lookup(req.headers['user-agent']).toJSON();
   const geo = geoip.lookup(req.ip);
   const headers = {
@@ -46,11 +46,15 @@ app.use('/', (req, res) => {
     accept: req.headers['accept'],
     language: req.headers['accept-language']
   };
-  let signature = { agent, geo, headers };
-  debug(signature);
-  debug(sha3_256(circular.stringify(signature)))
+  let signature = sha3_256(circular.stringify({ agent, geo, headers }));
+  debug('request received.');
+  awaiting.set(signature, req);
+  debug(awaiting.size);
   onFinished(req, (...args) => {
+    debug(req.body);
+    awaiting.delete(signature);
     debug('request ended.');
+    debug(awaiting.size);
   });
 });
 
