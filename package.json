@@ -21,8 +21,11 @@
   },
   "homepage": "https://github.com/xemasiv/spacerift#readme",
   "dependencies": {
+    "axios": "^0.18.0",
     "debug": "^3.1.0",
-    "simple-peer": "^9.1.1"
+    "eventemitter3": "^3.1.0",
+    "simple-peer": "^9.1.1",
+    "uuid-random": "^1.0.6"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",
