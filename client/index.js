@@ -25,16 +25,16 @@ class Client{
       signal = btoa(JSON.stringify(signal));
       debug('signal received');
       debug(signal);
-        fetch(client.host, {
-            method: 'POST',
-            body: {
-              type: ACTIONS.CONNECT,
-              signal
-            }
-          })
-          .then(debug)
-          .then(debug)
-          .catch(debug);
+      fetch(client.host, {
+          method: 'POST',
+          body: {
+            type: ACTIONS.CONNECT,
+            signal
+          }
+        })
+        .then(debug)
+        .then(debug)
+        .catch(debug);
     });
     debug('awaiting signal..');
     peer.on('signal', (signal) => {

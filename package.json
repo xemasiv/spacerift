@@ -1,6 +1,6 @@
 {
   "name": "spacerift",
-  "version": "1.0.0",
+  "version": "0.0.15",
   "description": "HTTP-based peer-links with efficient roundtrips.",
   "main": "index.js",
   "scripts": {
