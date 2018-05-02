@@ -48,16 +48,15 @@ const check = () => {
     fresh.size > 0 && // if we have any freshies
     fresh.size % 2 === 0 // and we got pairs for each
   ) {
-    debug('fresh ready for pairing', fresh.size);
     let pair = [];
     debug('pair lookup');
     fresh.forEach((value, key) => {
       debug('across', key);
       pair.push({key, value});
       fresh.delete(key);
-      if (pair.length = 2) {
-        debug('pair ready');
-        debug(pair.length);
+      debug('pair now', pair.length);
+      if (pair.length === 2) {
+        debug('pair matched');
       }
     });
   };
@@ -72,6 +71,7 @@ app.post('/', (req, res) => {
     language: req.headers['accept-language']
   };
   let signature = sha3_256(circular.stringify({ agent, geo, headers }));
+  debug('START', fresh.size, awaiting.size, signature);
   debug(req.body);
   switch (req.body.type) {
     case ACTIONS.CONNECT:
@@ -86,8 +86,6 @@ app.post('/', (req, res) => {
 
       break;
   }
-  debug(signature);
-  debug('START', fresh.size, awaiting.size, signature);
   onFinished(req, (...args) => {
     if (fresh.has(signature) === true) {
       fresh.delete(signature);
