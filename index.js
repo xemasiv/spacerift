@@ -7,7 +7,8 @@ const bodyParser = require('body-parser');
 const expressSession = require('express-session');
 const cors = require('cors');
 const DEBUG = require('debug');
-const onFinished = require('on-finished')
+const onFinished = require('on-finished');
+// const circular = require('circular-json');
 
 const debug = DEBUG('Spacerift');
 debug.enabled = true;
@@ -17,7 +18,7 @@ const app = express();
 app.use(cors({
     origin: true,
     methods:['GET','POST'],
-    credentials: true // enable set cookie
+    credentials: true // enable set cookie asd
 }));
 app.use(compression());
 app.use(expressSession({
@@ -31,9 +32,23 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 
+const useragent = require('useragent');
+const geoip = require('geoip-lite');
+
 app.use('/', (req, res) => {
   debug('request received.');
   debug(req.body);
+  const agent = useragent.lookup(req.headers['user-agent']);
+  const geo = geoip.lookup(req.ip);
+  const headers = {
+    host: req.headers['host'],
+    accept: req.headers['accept'],
+    language: req.headers['accept-language']
+  };
+  let signature = { agent, geo, headers };
+  debug(signature);
+  // debug(circular.stringify(signature));
+  debug(JSON.stringify(signature));
   onFinished(req, (...args) => {
     debug('request ended.');
   });

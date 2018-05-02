@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack"
+    "build": "webpack",
+    "watch": "webpack --watch --display-error-details",
+    "try": "webpack --display-error-details"
   },
   "repository": {
     "type": "git",
@@ -29,9 +31,11 @@
     "eventemitter3": "^3.1.0",
     "express": "^4.16.3",
     "express-session": "^1.15.6",
+    "geoip-lite": "^1.2.1",
     "on-finished": "^2.3.0",
     "simple-peer": "^9.1.1",
     "supports-color": "^5.4.0",
+    "useragent": "^2.3.0",
     "uuid-random": "^1.0.6"
   },
   "devDependencies": {
