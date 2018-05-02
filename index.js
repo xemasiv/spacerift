@@ -8,7 +8,8 @@ const expressSession = require('express-session');
 const cors = require('cors');
 const DEBUG = require('debug');
 const onFinished = require('on-finished');
-// const circular = require('circular-json');
+const circular = require('circular-json');
+const sha3_256 = require('js-sha3').sha3_256;
 
 const debug = DEBUG('Spacerift');
 debug.enabled = true;
@@ -38,7 +39,7 @@ const geoip = require('geoip-lite');
 app.use('/', (req, res) => {
   debug('request received.');
   debug(req.body);
-  const agent = useragent.lookup(req.headers['user-agent']);
+  const agent = useragent.lookup(req.headers['user-agent']).toJSON();
   const geo = geoip.lookup(req.ip);
   const headers = {
     host: req.headers['host'],
@@ -47,8 +48,7 @@ app.use('/', (req, res) => {
   };
   let signature = { agent, geo, headers };
   debug(signature);
-  // debug(circular.stringify(signature));
-  debug(JSON.stringify(signature));
+  debug(sha3_256(circular.stringify(signature)))
   onFinished(req, (...args) => {
     debug('request ended.');
   });
