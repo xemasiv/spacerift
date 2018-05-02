@@ -59,9 +59,7 @@ const check = () => {
     });
   };
 };
-app.get('/', (req, res) => {
-  
-});
+app.use(express.static('dist'))
 app.post('/', (req, res) => {
   const agent = useragent.lookup(req.headers['user-agent']).toJSON();
   const geo = geoip.lookup(req.ip);

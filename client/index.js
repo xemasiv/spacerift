@@ -9,7 +9,6 @@ const debug     = DEBUG('Spacerift:debug');
 const info      = DEBUG('Spacerift:info');
 info.enabled    = true;
 debug.enabled   = ENV.debug;
-
 class Client{
   constructor (o) {
     this.host = (
@@ -22,13 +21,20 @@ class Client{
     this.emit = EventEmitter.emit.bind(EventEmitter);
   }
   discover () {
-    debug('host:', client.host);
     let client = this;
+    debug('host:', client.host);
     let peer = new Peer({ initiator: true });
     let signalContext = uuid();
     client.once(signalContext, (signal) => {
-      debug('signal received:');
-      debug(JSON.stringify(signal));
+      signal = btoa(JSON.stringify(signal));
+      debug('signal received');
+      debug(signal);
+      axios
+        .post(client.host, {
+          signal
+        })
+        .then(debug)
+        .catch(debug);
     });
     debug('awaiting signal..');
     peer.on('signal', (signal) => {
