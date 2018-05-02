@@ -19,7 +19,7 @@ const app = express();
 app.use(cors({
     origin: true,
     methods:['GET','POST'],
-    credentials: true // enable set cookie asd
+    credentials: true
 }));
 app.use(compression());
 app.use(expressSession({
@@ -35,15 +35,18 @@ app.use(bodyParser.urlencoded({
 
 const useragent = require('useragent');
 const geoip = require('geoip-lite');
+const ACTIONS = require('./shared/Enums.js');
 
 const fresh = new Map();
 const awaiting = new Map();
 
 const check = () => {
   debug('running check');
+  debug('fresh.size', fresh.size);
+  debug('got equal pairs', fresh.size % 2 === 0);
   if (
     fresh.size > 0 && // if we have any freshies
-    Boolean(fresh.size % 2) === 0 // and we got pairs for each
+    fresh.size % 2 === 0 // and we got pairs for each
   ) {
     debug('fresh ready for pairing', fresh.size);
     let pair = [];
@@ -69,21 +72,27 @@ app.post('/', (req, res) => {
     language: req.headers['accept-language']
   };
   let signature = sha3_256(circular.stringify({ agent, geo, headers }));
-  if (awaiting.has(signature) === false) {
-    if (fresh.has(signature) === false) {
-      fresh.set(signature, req);
-      check();
-    }
+  debug(req.body);
+  switch (req.body.type) {
+    case ACTIONS.CONNECT:
+      if (awaiting.has(signature) === false) {
+        if (fresh.has(signature) === false) {
+          fresh.set(signature, req);
+          check();
+        }
+      }
+      break;
+    default:
+
+      break;
   }
   debug(signature);
-  debug('START', fresh.size, awaiting.size);
+  debug('START', fresh.size, awaiting.size, signature);
   onFinished(req, (...args) => {
-    debug(req.body);
     if (fresh.has(signature) === true) {
       fresh.delete(signature);
     }
-    debug(signature);
-    debug('END.', fresh.size, awaiting.size);
+    debug('END', fresh.size, awaiting.size, signature);
   });
 });
 

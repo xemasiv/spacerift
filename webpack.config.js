@@ -2,7 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 module.exports = [
   {
-    entry: './client/index.js',
+    entry: ['whatwg-fetch', './client/index.js'],
     output: {
       filename: 'client.js',
       path: path.resolve(__dirname, 'dist')

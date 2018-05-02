@@ -23,7 +23,6 @@
   },
   "homepage": "https://github.com/xemasiv/spacerift#readme",
   "dependencies": {
-    "axios": "^0.18.0",
     "body-parser": "^1.18.2",
     "circular-json": "^0.5.3",
     "compression": "^1.7.2",
@@ -38,7 +37,8 @@
     "simple-peer": "^9.1.1",
     "supports-color": "^5.4.0",
     "useragent": "^2.3.0",
-    "uuid-random": "^1.0.6"
+    "uuid-random": "^1.0.6",
+    "whatwg-fetch": "^2.0.4"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",

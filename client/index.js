@@ -1,19 +1,15 @@
 const DEBUG         = require('debug');
-const axios         = require('axios');
 const Peer          = require('simple-peer');
 const uuid          = require('uuid-random');
 const EventEmitter3 = require('eventemitter3');
 const ACTIONS       = require('../shared/Enums.js');
-
 const debug     = DEBUG('Spacerift:debug');
 const info      = DEBUG('Spacerift:info');
 info.enabled    = true;
 debug.enabled   = ENV.debug;
 class Client{
   constructor (o) {
-    this.host = (
-      typeof o === 'object' && Boolean(o.host) === true
-    ) ? o.host : window.location.href;
+    this.host = ( typeof o === 'object' && Boolean(o.host) === true ) ? o.host : window.location.href;
     this.peers = [];
     let EventEmitter = new EventEmitter3();
     this.on = EventEmitter.on.bind(EventEmitter);
@@ -29,12 +25,16 @@ class Client{
       signal = btoa(JSON.stringify(signal));
       debug('signal received');
       debug(signal);
-      axios
-        .post(client.host, {
-          signal
-        })
-        .then(debug)
-        .catch(debug);
+        fetch(client.host, {
+            method: 'POST',
+            body: {
+              type: ACTIONS.CONNECT,
+              signal
+            }
+          })
+          .then(debug)
+          .then(debug)
+          .catch(debug);
     });
     debug('awaiting signal..');
     peer.on('signal', (signal) => {
