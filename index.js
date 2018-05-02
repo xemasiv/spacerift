@@ -36,7 +36,14 @@ app.use(bodyParser.urlencoded({
 const useragent = require('useragent');
 const geoip = require('geoip-lite');
 
+const fresh = new Map();
 const awaiting = new Map();
+
+const move = () => {
+  for (var i = 0; i <= 10; i++) {
+    console.log(i, Boolean(i % 2));
+  };
+};
 
 app.use('/', (req, res) => {
   const agent = useragent.lookup(req.headers['user-agent']).toJSON();
@@ -47,14 +54,22 @@ app.use('/', (req, res) => {
     language: req.headers['accept-language']
   };
   let signature = sha3_256(circular.stringify({ agent, geo, headers }));
-  debug('request received.');
-  awaiting.set(signature, req);
-  debug(awaiting.size);
+  if (awaiting.has(signature) === false) {
+    if (fresh.has(signature) === false) {
+      fresh.set(signature, req);
+    }
+  }
+  debug('REQ START.');
+  debug('fresh:', fresh.size);
+  debug('awaiting:', awaiting.size);
   onFinished(req, (...args) => {
     debug(req.body);
-    awaiting.delete(signature);
-    debug('request ended.');
-    debug(awaiting.size);
+    if (fresh.has(signature) === true) {
+      fresh.delete(signature);
+    }
+    debug('REQ END.');
+    debug('fresh:', fresh.size);
+    debug('awaiting:', awaiting.size);
   });
 });
 
