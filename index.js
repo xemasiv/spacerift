@@ -6,6 +6,12 @@ const compression = require('compression')
 const bodyParser = require('body-parser');
 const expressSession = require('express-session');
 const cors = require('cors');
+const DEBUG = require('debug');
+const onFinished = require('on-finished')
+
+const debug = DEBUG('Spacerift');
+debug.enabled = true;
+debug.useColors = true;
 
 const app = express();
 app.use(cors({
@@ -24,6 +30,14 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
 }));
+
+app.use('/', (req, res) => {
+  debug('request received.');
+  debug(req.body);
+  onFinished(req, (...args) => {
+    debug('request ended.');
+  });
+});
 
 /*
 const forceSSL = require('express-force-ssl');
