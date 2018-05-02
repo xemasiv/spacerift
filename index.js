@@ -39,13 +39,30 @@ const geoip = require('geoip-lite');
 const fresh = new Map();
 const awaiting = new Map();
 
-const move = () => {
-  for (var i = 0; i <= 10; i++) {
-    console.log(i, Boolean(i % 2));
+const check = () => {
+  debug('running check');
+  if (
+    fresh.size > 0 && // if we have any freshies
+    Boolean(fresh.size % 2) === 0 // and we got pairs for each
+  ) {
+    debug('fresh ready for pairing', fresh.size);
+    let pair = [];
+    debug('pair lookup');
+    fresh.forEach((value, key) => {
+      debug('across', key);
+      pair.push({key, value});
+      fresh.delete(key);
+      if (pair.length = 2) {
+        debug('pair ready');
+        debug(pair.length);
+      }
+    });
   };
 };
-
-app.use('/', (req, res) => {
+app.get('/', (req, res) => {
+  
+});
+app.post('/', (req, res) => {
   const agent = useragent.lookup(req.headers['user-agent']).toJSON();
   const geo = geoip.lookup(req.ip);
   const headers = {
@@ -57,19 +74,18 @@ app.use('/', (req, res) => {
   if (awaiting.has(signature) === false) {
     if (fresh.has(signature) === false) {
       fresh.set(signature, req);
+      check();
     }
   }
-  debug('REQ START.');
-  debug('fresh:', fresh.size);
-  debug('awaiting:', awaiting.size);
+  debug(signature);
+  debug('START', fresh.size, awaiting.size);
   onFinished(req, (...args) => {
     debug(req.body);
     if (fresh.has(signature) === true) {
       fresh.delete(signature);
     }
-    debug('REQ END.');
-    debug('fresh:', fresh.size);
-    debug('awaiting:', awaiting.size);
+    debug(signature);
+    debug('END.', fresh.size, awaiting.size);
   });
 });
 
