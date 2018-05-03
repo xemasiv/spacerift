@@ -91,8 +91,34 @@ Spacerift.PLUGINS.push(
     * `state[requests[fingerprint]]` : `req`
     * `state[responses[fingerprint]]` : `res`
 
-#### Client-side implementation
-* `SpaceriftHTTPClient`
+#### Spacerift HTTPClient
+* For the client-side, you may write and use your own WebRTC client implementations.
+* However we also supply a bare client with the following libraries:
+  * `immutable`
+  * `redux`
+  * `simple-peer`
+* The following polyfills are also included:
+  * `babel-polyfill`
+  * `whatwg-fetch`
+* In the browser, `client.js` exposes the following:
+  * `window.Immutable` : `immutable` library
+  * `window.Redux` : `redux` library
+  * `window.Peer` : `simple-peer` library
+  * `window.Spacerift` : Object
+    * `STORE` : `Redux Store`
+    * `REDUCERS` : `Reducers Array`
+    * `HTTPClient` : class `HTTPClient`
+    * `enableDebug` : Function
+* class `HTTPClient`
+  * `constructor` (options)
+    * Takes `(options)`
+      * `options.host` - target host, defaults to window.location.href
+  * method `createPeer` (options) Function
+    * Creates a new `simple-peer` instance.
+    * Takes `(options)`
+      * `options` - passed to the new instance
+    * Returns
+      * `simple-peer` instance.
 
 ## License
 

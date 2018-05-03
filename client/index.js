@@ -1,17 +1,20 @@
 const Peer          = require('simple-peer');
 const EventEmitter3 = require('eventemitter3');
 const Immutable     = require('immutable');
-const DEBUG         = require('debug');
-const uuid          = require('uuid-random');
-
-const debug     = DEBUG('Spacerift:debug');
-const info      = DEBUG('Spacerift:info');
-info.enabled    = true;
-debug.enabled   = ENV.debug;
-
-let STATE = Immutable.Map({});
-
-class Client {
+const Redux         = require('redux');
+const debug     = require('debug')('Spacerift');
+let REDUCERS = [];
+const STORE = Redux.createStore((state = Immutable.Map({}), action) => {
+  debug('ACTION', action.type);
+  REDUCERS.map((reducer, index) => {
+    debug('reducer', index + 1, 'of', REDUCERS.length);
+    state = reducer(state, action);
+    debug('STATE UPDATED');
+    debug(state.toObject());
+  });
+  return state;
+});
+class HTTPClient {
   constructor (options) {
     let EE = new EventEmitter3();
     this.on = EE.on.bind(EE);
@@ -53,11 +56,14 @@ class Client {
     return peer;
   }
 };
+window.Immutable = Immutable;
+window.Redux = Redux;
+window.Peer = Peer;
 window.Spacerift = {
-  STATE,
-  Client
+  HTTPClient,
+  STORE,
+  REDUCERS,
+  enableDebug: () => {
+    debug.enabled = true;
+  }
 };
-if (ENV.debug) {
-  window.x = new Client();
-}
-info('OK!');
