@@ -32,6 +32,7 @@
     "express": "^4.16.3",
     "express-session": "^1.15.6",
     "geoip-lite": "^1.2.1",
+    "immutable": "^3.8.2",
     "js-sha3": "^0.7.0",
     "on-finished": "^2.3.0",
     "simple-peer": "^9.1.1",
