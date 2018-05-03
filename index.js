@@ -56,7 +56,7 @@ const check = () => {
       fresh.delete(key);
       debug('pair now', pair.length);
       if (pair.length === 2) {
-        debug('pair matched');
+        debug('pair matched!');
       }
     });
   };
