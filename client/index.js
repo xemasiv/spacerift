@@ -32,7 +32,6 @@ class Client{
           }
         })
         .then(debug)
-        .then(debug)
         .catch(debug);
     });
     debug('awaiting signal..');
@@ -48,4 +47,3 @@ if (ENV.debug) {
   window.x = new Client();
 }
 info('OK!');
-debug('actions:', ACTIONS);
