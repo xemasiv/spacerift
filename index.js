@@ -77,6 +77,7 @@ app.post('/', (req, res) => {
   if (clients.has(fingerprint) === true) {
     clientState = clients.get(fingerprint);
     clientState = clientState.set('connection', 'online');
+    clientState = clientState.set('request', req);
     clients.set(fingerprint, clientState);
   } else {
     clientState = Immutable.Map({
