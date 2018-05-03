@@ -122,17 +122,25 @@ Spacerift.PLUGINS.push(
       * `simple-peer` instance.
   * property `peers` `Immutable.List`
     * Returns list of created peers.
-* Client Testing
+* Testing client `STORE` and `REDUCER`
   * Load `client.js` in your browser:
   * Paste the following code:
   ```
   Spacerift.enableDebug();
   Spacerift.REDUCERS.push((state, action) => {
-    console.log(state);
+    console.log(state.toString());
     console.log(action);
     return state;
   })
   Spacerift.STORE.dispatch({ type: 'Hello!' });
+  ```
+  ```
+  06:44:00.381 Spacerift ACTION +0ms Hello!
+  06:44:00.381 Spacerift REDUCER +1ms 1 of 1
+  06:44:00.382 Map {}
+  06:44:00.382 {type: "Hello!"}
+  06:44:00.384 Spacerift STATE UPDATED +2ms
+  06:44:00.384 Spacerift Map {} +0ms
   ```
 
 ## License
