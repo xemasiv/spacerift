@@ -2,7 +2,6 @@ const DEBUG         = require('debug');
 const Peer          = require('simple-peer');
 const uuid          = require('uuid-random');
 const EventEmitter3 = require('eventemitter3');
-const ACTIONS       = require('../shared/Enums.js');
 const debug     = DEBUG('Spacerift:debug');
 const info      = DEBUG('Spacerift:info');
 info.enabled    = true;
@@ -28,7 +27,7 @@ class Client{
       fetch(client.host, {
           method: 'POST',
           body: {
-            type: ACTIONS.CONNECT,
+            type: 'CONNECT',
             signal
           }
         })

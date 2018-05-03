@@ -17,9 +17,8 @@ HTTP-based peer-links with efficient roundtrips.
   * This changes the client's `connection` state to `offline`, and this removes the `request` reference to the `req` Object.
   * Now everytime this client connects, its `connection` state is switched back to `online`, and its `request` value is updated with the new `req` Object.
 
-## Server & Client Plugins
-* With a `plug-and-play` approach in mind, server and clients must work with individual modules instead that can be mixed and matched with each other.
-* This will allow users to just pick any existing modules for their project, or easily craft one for custom purposes.
+## Server & Client Plug-ins
+* We use plug-ins to allow users to just pick any existing modules for their project, or easily craft one for custom purposes.
 
 ## License
 
