@@ -24,7 +24,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('../dist'));
 
 const Spacerift = require('../index.js');
-app.post('/', Spacerift.postHandler);
+app.post('/', Spacerift.HTTP);
 
 http.createServer(app).listen(80);
 console.log('Now listening at port 80.')

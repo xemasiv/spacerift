@@ -142,7 +142,7 @@ const STORE = Redux.createStore((state = Immutable.Map({}), action) => {
   }
 });
 
-const postHandler = (req, res) => {
+const HTTP = (req, res) => {
   /*
   const agent = useragent.lookup(req.headers['user-agent']).toJSON();
   const geo = geoip.lookup(req.ip);
@@ -190,7 +190,7 @@ const postHandler = (req, res) => {
 };
 
 const Spacerift = {
-  postHandler
+  HTTP
 };
 
 module.exports = Spacerift;
