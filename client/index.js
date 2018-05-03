@@ -7,10 +7,10 @@ let REDUCERS = [];
 const STORE = Redux.createStore((state = Immutable.Map({}), action) => {
   debug('ACTION', action.type);
   REDUCERS.map((reducer, index) => {
-    debug('reducer', index + 1, 'of', REDUCERS.length);
+    debug('REDUCER', index + 1, 'of', REDUCERS.length);
     state = reducer(state, action);
     debug('STATE UPDATED');
-    debug(state.toObject());
+    debug(state.toString());
   });
   return state;
 });

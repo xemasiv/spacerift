@@ -119,6 +119,22 @@ Spacerift.PLUGINS.push(
       * `options` - passed to the new instance
     * Returns
       * `simple-peer` instance.
+  * property `peers`
+    * Returns list of created peers.
+    * Returns
+      * `Immutable.List` instance.
+* Client Testing
+  * Load `client.js` in your browser:
+  * Paste the following code:
+  ```
+  Spacerift.enableDebug();
+  Spacerift.REDUCERS.push((state, action) => {
+    console.log(state);
+    console.log(action);
+    return state;
+  })
+  Spacerift.STORE.dispatch({ type: 'Hello!' });
+  ```
 
 ## License
 
