@@ -119,10 +119,8 @@ Spacerift.PLUGINS.push(
       * `options` - passed to the new instance
     * Returns
       * `simple-peer` instance.
-  * property `peers`
+  * property `peers` `Immutable.List`
     * Returns list of created peers.
-    * Returns
-      * `Immutable.List` instance.
 * Client Testing
   * Load `client.js` in your browser:
   * Paste the following code:
