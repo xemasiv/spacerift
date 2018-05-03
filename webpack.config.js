@@ -4,7 +4,7 @@ module.exports = [
   {
     entry: ['babel-polyfill', 'whatwg-fetch', './client/index.js'],
     output: {
-      filename: 'client.js',
+      filename: 'spacerift.min.js',
       path: path.resolve(__dirname, 'dist')
     },
     module: {

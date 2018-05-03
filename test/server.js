@@ -21,8 +21,8 @@ app.use(expressSession({
 }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static('../dist'));
 
+app.use('/', express.static('./dist'));
 
 const Spacerift = require('../index.js')({
   debug: true
@@ -32,8 +32,12 @@ Spacerift.PLUGINS.push(
     debug: true
   })
 );
+app.get('/', (req, res) => {
+  res.sendFile(__dirname.concat('/index.html'));
+});
 app.post('/', Spacerift.HTTP);
 
 
 http.createServer(app).listen(80);
-console.log('Now listening at port 80.')
+console.log("NOTE: Run this with 'npm test' to work properly.");
+console.log('Now listening at port 80.');

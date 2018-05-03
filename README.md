@@ -101,7 +101,7 @@ Spacerift.PLUGINS.push(
 * The following polyfills are also included:
   * `babel-polyfill`
   * `whatwg-fetch`
-* In the browser, `client.js` exposes the following:
+* In the browser, `spacerift.min.js` exposes the following:
   * `window.Immutable` : `immutable` library
   * `window.Redux` : `redux` library
   * `window.Peer` : `simple-peer` library
@@ -123,8 +123,8 @@ Spacerift.PLUGINS.push(
   * property `peers` `Immutable.List`
     * Returns list of created peers.
 * Testing client `STORE` and `REDUCER`
-  * Load `client.js` in your browser:
-  * Paste the following code:
+  * Run `npm test` or load `spacerift.min.js` anywhere.
+  * Paste the following code in console:
   ```
   Spacerift.enableDebug();
   Spacerift.REDUCERS.push((state, action) => {
@@ -134,6 +134,7 @@ Spacerift.PLUGINS.push(
   })
   Spacerift.STORE.dispatch({ type: 'Hello!' });
   ```
+  * Expected result:
   ```
   06:44:00.381 Spacerift ACTION +0ms Hello!
   06:44:00.381 Spacerift REDUCER +1ms 1 of 1
