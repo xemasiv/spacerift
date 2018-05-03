@@ -69,17 +69,9 @@ app.post('/', Spacerift.HTTP);
     * Returns
       * `state` : `Immutable.Map`
 
-* Plugins can be easily pushed to `Spacerift.PLUGINS`:
-```
-Spacerift.PLUGINS.push(
-    Spacerift.Fingerprint({
-      debug: true
-    })
-);
-```
-
-#### Example Plugin
+#### Built-in plug-ins
 * plugin `Fingerprint`
+  * Exposed as `Spacerift.Fingerprint`
   * This plugin's purpose is to efficiently identify individual clients as they connect and disconnect from our server.
   * A `sha3_256` hash of the following will be used as the `fingerprint`:
     * `useragent`
@@ -89,6 +81,16 @@ Spacerift.PLUGINS.push(
     * `state[fingerprints]`.push(`fingerprint`)
     * `state[requests[fingerprint]]` : `req`
     * `state[responses[fingerprint]]` : `res`
+
+#### Using plug-ins
+* To use plugins, just push them to  `Spacerift.PLUGINS` Array:
+```
+Spacerift.PLUGINS.push(
+    Spacerift.Fingerprint({
+      debug: true
+    })
+);
+```
 
 #### Spacerift HTTPClient
 * For the client-side, you may write and use your own WebRTC client implementations.
