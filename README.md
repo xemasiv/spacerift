@@ -71,9 +71,8 @@ app.post('/', Spacerift.HTTP);
 
 * Plugins can be easily pushed to `Spacerift.PLUGINS`:
 ```
-const Fingerprint = require('/plugins/Fingerprint.js');
 Spacerift.PLUGINS.push(
-    Fingerprint({
+    Spacerift.Fingerprint({
       debug: true
     })
 );

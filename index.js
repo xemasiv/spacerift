@@ -4,6 +4,8 @@ const Redux = require('redux');
 
 const debug = require('debug')('Spacerift');
 
+const Fingerprint = require('./plugins/Fingerprint.js');
+
 const Spacerift = (options) => {
 
   if (typeof options === 'object') {
@@ -47,7 +49,7 @@ const Spacerift = (options) => {
         break;
     }
   });
-  return { HTTP, PLUGINS };
+  return { HTTP, PLUGINS, Fingerprint };
 };
 
 module.exports = Spacerift;

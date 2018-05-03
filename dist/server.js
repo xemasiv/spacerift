@@ -27,9 +27,8 @@ app.use(express.static('../dist'));
 const Spacerift = require('../index.js')({
   debug: true
 });
-const Fingerprint = require('../plugins/Fingerprint.js');
 Spacerift.PLUGINS.push(
-  Fingerprint({
+  Spacerift.Fingerprint({
     debug: true
   })
 );
