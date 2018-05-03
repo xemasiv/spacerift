@@ -23,7 +23,9 @@ Simplified WebRTC client orchestration.
 
 1. We bind `Spacerift.HTTP` to our `express` app.
 ```
-const Spacerift = require('spacerift');
+const Spacerift = require('spacerift')({
+  debug: true
+});
 app.post('/', Spacerift.HTTP);
 ```
 2. We load our plugins at `Spacerift.PLUGINS`.
@@ -69,9 +71,11 @@ app.post('/', Spacerift.HTTP);
 
 * Plugins can be easily pushed to `Spacerift.PLUGINS`:
 ```
-let pluginOptions = {};
+const Fingerprint = require('/plugins/Fingerprint.js');
 Spacerift.PLUGINS.push(
-    pluginFunction(pluginOptions)
+    Fingerprint({
+      debug: true
+    })
 );
 ```
 

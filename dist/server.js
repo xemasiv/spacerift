@@ -23,8 +23,18 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('../dist'));
 
-const Spacerift = require('../index.js');
+
+const Spacerift = require('../index.js')({
+  debug: true
+});
+const Fingerprint = require('../plugins/Fingerprint.js');
+Spacerift.PLUGINS.push(
+  Fingerprint({
+    debug: true
+  })
+);
 app.post('/', Spacerift.HTTP);
+
 
 http.createServer(app).listen(80);
 console.log('Now listening at port 80.')

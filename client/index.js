@@ -1,48 +1,62 @@
-const DEBUG         = require('debug');
 const Peer          = require('simple-peer');
-const uuid          = require('uuid-random');
 const EventEmitter3 = require('eventemitter3');
+const Immutable     = require('immutable');
+const DEBUG         = require('debug');
+const uuid          = require('uuid-random');
+
 const debug     = DEBUG('Spacerift:debug');
 const info      = DEBUG('Spacerift:info');
 info.enabled    = true;
 debug.enabled   = ENV.debug;
-class Client{
-  constructor (o) {
-    this.host = ( typeof o === 'object' && Boolean(o.host) === true ) ? o.host : window.location.href;
-    this.peers = [];
-    let EventEmitter = new EventEmitter3();
-    this.on = EventEmitter.on.bind(EventEmitter);
-    this.once = EventEmitter.once.bind(EventEmitter);
-    this.emit = EventEmitter.emit.bind(EventEmitter);
+
+let STATE = Immutable.Map({});
+
+class Client {
+  constructor (options) {
+    let EE = new EventEmitter3();
+    this.on = EE.on.bind(EE);
+    this.once = EE.once.bind(EE);
+    this.emit = EE.emit.bind(EE);
+
+    this.host = (
+      typeof options === 'object' &&
+      Boolean(options.host) === true
+    ) ? options.host : window.location.href;
+
+    this.peers = Immutable.List();
   }
-  discover () {
+  createPeer (options) {
     let client = this;
-    debug('host:', client.host);
-    let peer = new Peer({ initiator: true });
-    let signalContext = uuid();
-    client.once(signalContext, (signal) => {
-      signal = btoa(JSON.stringify(signal));
-      debug('signal received');
-      debug(signal);
-      fetch(client.host, {
-          method: 'POST',
-          body: {
-            type: 'CONNECT',
-            signal
-          }
-        })
-        .then(debug)
-        .catch(debug);
-    });
-    debug('awaiting signal..');
-    peer.on('signal', (signal) => {
-      client.emit(signalContext, signal)
-      client.emit('signal', signal);
-    });
-    client.peers.push(peer);
+    let peer = new Peer(options);
+    client.peers = client.peers.push(peer);
+    /*
+      let signalContext = uuid();
+        client.once(signalContext, (signal) => {
+          signal = btoa(JSON.stringify(signal));
+          debug('signal received');
+          debug(signal);
+          fetch(client.host, {
+              method: 'POST',
+              body: {
+                type: 'CONNECT',
+                signal
+              }
+            })
+            .then(debug)
+            .catch(debug);
+        });
+      peer.on('signal', (signal) => {
+        // client.emit(signalContext, signal);
+        client.emit('signal', peer, signal);
+      });
+    */
+    return peer;
   }
-}
-window.SpaceriftClient = Client;
+};
+window.Spacerift = {
+  STATE,
+  Client
+};
 if (ENV.debug) {
   window.x = new Client();
 }

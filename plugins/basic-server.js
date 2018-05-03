@@ -1,9 +1,0 @@
-const ACTIONS = {
-  CONNECT: 'CONNECT',
-  DEMOTE: 'DEMOTE',
-  ANSWER: 'ANSWER',
-  DELIVERED: 'DELIVERED',
-  BOUNCE: 'BOUNCE'
-};
-
-module.exports = { ACTIONS };
