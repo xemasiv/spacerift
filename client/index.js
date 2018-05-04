@@ -20,12 +20,15 @@ class HTTPClient {
     this.on = EE.on.bind(EE);
     this.once = EE.once.bind(EE);
     this.emit = EE.emit.bind(EE);
-
-    this.host = (
-      typeof options === 'object' &&
-      Boolean(options.host) === true
-    ) ? options.host : window.location.href;
-
+    let host;
+    if (typeof options === 'object' && Boolean(options.host) === true ) {
+      host = options.host;
+    } else {
+      if (typeof window !== 'undefined') {
+        host = window.location.href;
+      }
+    }
+    this.host = host;
     this.peers = Immutable.List();
   }
   createPeer (options) {
@@ -56,14 +59,25 @@ class HTTPClient {
     return peer;
   }
 };
-window.Immutable = Immutable;
-window.Redux = Redux;
-window.Peer = Peer;
-window.Spacerift = {
-  HTTPClient,
-  STORE,
-  REDUCERS,
-  enableDebug: () => {
-    debug.enabled = true;
-  }
-};
+if (typeof window !== 'undefined') {
+  window.Immutable = Immutable;
+  window.Redux = Redux;
+  window.Peer = Peer;
+  window.Spacerift = {
+    HTTPClient,
+    STORE,
+    REDUCERS,
+    enableDebug: () => {
+      debug.enabled = true;
+    }
+  };
+} else if (typeof module !== 'undefined') {
+  module.exports = Spacerift = {
+    HTTPClient,
+    STORE,
+    REDUCERS,
+    enableDebug: () => {
+      debug.enabled = true;
+    }
+  };
+}
