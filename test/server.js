@@ -30,11 +30,13 @@ const Spacerift = require('../index.js')({
 });
 
 const QuickLink = require('./custom-plugins/QuickLink.js');
+const SignedNonce = require('./custom-plugins/SignedNonce.js');
 
 Spacerift.PLUGINS.push( Spacerift.Fingerprint({ debug: true }) );
 Spacerift.PLUGINS.push( Spacerift.RequestBody({ debug: true }) );
 Spacerift.PLUGINS.push( Spacerift.RequestSession({ debug: true }) );
 Spacerift.PLUGINS.push( QuickLink({ debug: true }) );
+// Spacerift.PLUGINS.push( SignedNonce({ debug: true }) );
 
 app.get('/', (req, res) => {
   res.sendFile(__dirname.concat('/index.html'));

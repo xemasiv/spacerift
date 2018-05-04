@@ -14,7 +14,6 @@ const QuickLink = (options) => {
     label: 'QuickLink',
     onConnect: (state, action) => {
       const { req, res } = action;
-      res.json({ hi: 'hi hi hi'});
       return state;
     },
     onDisconnect: (state, action) => {
