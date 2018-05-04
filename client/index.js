@@ -71,10 +71,8 @@ class HTTPClient {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(body)
-    });
-  }
-  requestJSON (body) {
-    return this.request(body).then((response) => response.json());
+    })
+    .then((response) => response.json());
   }
 };
 if (typeof window !== 'undefined') {

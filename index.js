@@ -22,14 +22,14 @@ const Spacerift = (options) => {
   const PLUGINS = [];
 
   const HTTP = (req, res) => {
-    debug('CONNECTED!!!!');
+    debug('CONNECTED');
     PLUGINS.map((plugin, index) => {
       var event = 'connect';
       debug(plugin.label, 'plugin', index + 1, 'of', PLUGINS.length);
       STORE.dispatch(plugin.actionCreator(event, req, res));
     });
     onFinished(res, () => {
-      debug('DISCONNECTED!!!!');
+      debug('DISCONNECTED');
       PLUGINS.map((plugin, index) => {
         var event = 'disconnect';
         debug(plugin.label, 'plugin', index + 1, 'of', PLUGINS.length);
