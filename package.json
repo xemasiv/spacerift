@@ -1,7 +1,7 @@
 {
   "name": "spacerift",
-  "version": "0.0.15",
-  "description": "HTTP-based peer-links with efficient roundtrips.",
+  "version": "0.0.16",
+  "description": "WebRTC Client Orchestration Framework",
   "main": "index.js",
   "scripts": {
     "test": "node test/server.js",
