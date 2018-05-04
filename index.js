@@ -22,33 +22,30 @@ const Spacerift = (options) => {
   const PLUGINS = [];
 
   const HTTP = (req, res) => {
-    STORE.dispatch({ type: 'CONNECT', req, res });
-    onFinished(req, () => STORE.dispatch({ type: 'DISCONNECT', req, res }) );
+    debug('CONNECTED!!!!');
+    PLUGINS.map((plugin, index) => {
+      var event = 'connect';
+      debug(plugin.label, 'plugin', index + 1, 'of', PLUGINS.length);
+      STORE.dispatch(plugin.actionCreator(event, req, res));
+    });
+    onFinished(res, () => {
+      debug('DISCONNECTED!!!!');
+      PLUGINS.map((plugin, index) => {
+        var event = 'disconnect';
+        debug(plugin.label, 'plugin', index + 1, 'of', PLUGINS.length);
+        STORE.dispatch(plugin.actionCreator(event, req, res));
+      });
+    });
   };
 
   const RootReducer = (state = Immutable.Map({}), action) => {
     debug('ACTION', action.type);
-    switch (action.type) {
-      case 'CONNECT':
-        PLUGINS.map((plugin, index) => {
-          debug(plugin.label, 'plugin', index + 1, 'of', PLUGINS.length);
-          state = plugin.onConnect(state, action);
-          debug('STATE', state.toString());
-        });
-        return state;
-        break;
-      case 'DISCONNECT':
-        PLUGINS.map((plugin, index) => {
-          debug(plugin.label, 'plugin', index + 1, 'of', PLUGINS.length);
-          state = plugin.onDisconnect(state, action);
-          debug('STATE', state.toString());
-        });
-        return state;
-        break;
-      default:
-        return state;
-        break;
-    }
+    PLUGINS.map((plugin, index) => {
+      debug(plugin.label, 'plugin', index + 1, 'of', PLUGINS.length);
+      state = plugin.reducer(state, action);
+      debug('STATE', state.toString());
+    });
+    return state;
   };
 
   const STORE = Redux.createStore(

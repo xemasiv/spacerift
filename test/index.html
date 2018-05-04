@@ -16,7 +16,7 @@ Hello!
   let Client = new Spacerift.HTTPClient();
   let createReducer = Spacerift.REDUCERS.push.bind(Spacerift.REDUCERS);
   let dispatch = Spacerift.STORE.dispatch.bind(Spacerift.STORE);
-  let requestJSON = Client.requestJSON.bind(Client);
+  let request = Client.request.bind(Client);
 
   createReducer((state, action) => {
     console.log('state:', state.toString());
@@ -28,9 +28,5 @@ Hello!
     type: 'HELLO'
   });
 
-  requestJSON({
-      hi: 'hello there!'
-    })
-    .then((response) => console.log(response))
-    .catch(console.error);
+  window.request = request;
 </script>
