@@ -1,5 +1,5 @@
 const Immutable = require('immutable');
-const debug = require('debug')('fingerprint');
+const debug = require('debug')('Fingerprint');
 const circular = require('circular-json');
 const sha3_256 = require('js-sha3').sha3_256;
 const useragent = require('useragent');

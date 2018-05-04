@@ -1,5 +1,5 @@
 const Immutable = require('immutable');
-const debug = require('debug')('fingerprint');
+const debug = require('debug')('QuickLink');
 
 const QuickLink = (options) => {
   if (typeof options === 'object') {
@@ -13,6 +13,7 @@ const QuickLink = (options) => {
     label: 'QuickLink',
     onConnect: (state, action) => {
       const { req, res } = action;
+      debug('req.session', req.session);
       return state;
     },
     onDisconnect: (state, action) => {

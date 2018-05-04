@@ -26,4 +26,13 @@ Hello!
   dispatch({
     type: 'HELLO'
   });
+
+  fetch(window.location.href, {
+    method: 'POST',
+    body: {
+      hi: 'hello'
+    }
+  })
+    .then(console.log)
+    .catch(console.error);
 </script>

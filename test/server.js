@@ -28,11 +28,12 @@ app.use('/static', express.static('./test/static'));
 const Spacerift = require('../index.js')({
   debug: true
 });
-Spacerift.PLUGINS.push(
-  Spacerift.Fingerprint({
-    debug: true
-  })
-);
+
+const QuickLink = require('./custom-plugins/QuickLink.js');
+
+Spacerift.PLUGINS.push( Spacerift.Fingerprint({ debug: true }) );
+Spacerift.PLUGINS.push( QuickLink({ debug: true }) );
+
 app.get('/', (req, res) => {
   res.sendFile(__dirname.concat('/index.html'));
 });
