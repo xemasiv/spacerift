@@ -73,6 +73,9 @@ class HTTPClient {
       body: JSON.stringify(body)
     });
   }
+  requestJSON (body) {
+    return this.request(body).then((response) => response.json());
+  }
 };
 if (typeof window !== 'undefined') {
   window.Immutable = Immutable;
