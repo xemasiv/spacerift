@@ -36,9 +36,6 @@ Spacerift.PLUGINS.push( Spacerift.Fingerprint({ debug: true }) );
 Spacerift.PLUGINS.push( Spacerift.RequestBody({ debug: true }) );
 Spacerift.PLUGINS.push( Spacerift.RequestSession({ debug: true }) );
 Spacerift.PLUGINS.push( KeybasePGP ({ debug: true }) );
-/*
-Spacerift.PLUGINS.push( QuickLink({ debug: true }) );
-*/
 
 app.get('/', (req, res) => {
   res.sendFile(__dirname.concat('/index.html'));
