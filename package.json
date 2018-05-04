@@ -38,6 +38,7 @@
     "kbpgp": "^2.0.77",
     "on-finished": "^2.3.0",
     "redux": "^4.0.0",
+    "redux-thunk": "^2.2.0",
     "simple-peer": "^9.1.1",
     "supports-color": "^5.4.0",
     "useragent": "^2.3.0",

@@ -1,6 +1,7 @@
 const onFinished = require('on-finished');
 const Immutable = require('immutable');
 const Redux = require('redux');
+const ReduxThunk = require('redux-thunk').default
 
 const debug = require('debug')('Spacerift');
 
@@ -25,7 +26,7 @@ const Spacerift = (options) => {
     onFinished(req, () => STORE.dispatch({ type: 'DISCONNECT', req, res }) );
   };
 
-  const STORE = Redux.createStore((state = Immutable.Map({}), action) => {
+  const RootReducer = (state = Immutable.Map({}), action) => {
     debug('ACTION', action.type);
     switch (action.type) {
       case 'CONNECT':
@@ -48,7 +49,12 @@ const Spacerift = (options) => {
         return state;
         break;
     }
-  });
+  };
+
+  const STORE = Redux.createStore(
+    RootReducer,
+    Redux.applyMiddleware(ReduxThunk)
+  );
   return { HTTP, PLUGINS, Fingerprint, RequestBody, RequestSession };
 };
 
