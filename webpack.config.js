@@ -13,11 +13,12 @@ module.exports = [
       ]
     },
     plugins: [
+      /*
       new webpack.DefinePlugin({
         'ENV': {
           'debug': true
         }
-      })
+      })*/
     ],
     mode: "production"
   }
