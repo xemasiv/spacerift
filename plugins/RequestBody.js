@@ -1,8 +1,5 @@
 const debug = require('debug')('RequestBody');
 
-// TODO:
-// Support client names and namespaces.
-// Allows multiple identities to co-exist from a single device.
 const RequestBody = (options) => {
   if (typeof options === 'object') {
     if (Boolean(options.debug) === true) {

@@ -1,8 +1,5 @@
 const debug = require('debug')('RequestSession');
 
-// TODO:
-// Support client names and namespaces.
-// Allows multiple identities to co-exist from a single device.
 const RequestSession = (options) => {
   if (typeof options === 'object') {
     if (Boolean(options.debug) === true) {
