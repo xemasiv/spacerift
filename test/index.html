@@ -1,2 +1,18 @@
 Hello!
 <script src="/spacerift.min.js"></script>
+<script>
+  Spacerift.enableDebug();
+  let Client = new Spacerift.HTTPClient();
+  let createReducer = Spacerift.REDUCERS.push.bind(Spacerift.REDUCERS);
+  let dispatch = Spacerift.STORE.dispatch.bind(Spacerift.STORE);
+
+  createReducer((state, action) => {
+    console.log('state:', state.toString());
+    console.log('action:', action);
+    return state;
+  });
+
+  dispatch({
+    type: 'HELLO'
+  });
+</script>

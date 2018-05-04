@@ -16,6 +16,7 @@ const STORE = Redux.createStore((state = Immutable.Map({}), action) => {
 });
 class HTTPClient {
   constructor (options) {
+    debug('HTTPClient.constructor()', options);
     let EE = new EventEmitter3();
     this.on = EE.on.bind(EE);
     this.once = EE.once.bind(EE);
@@ -32,6 +33,7 @@ class HTTPClient {
     this.peers = Immutable.List();
   }
   createPeer (options) {
+    debug('HTTPClient.createPeer()', options);
     let client = this;
     let peer = new Peer(options);
     client.peers = client.peers.push(peer);
