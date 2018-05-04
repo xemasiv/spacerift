@@ -1,8 +1,6 @@
-const Immutable = require('immutable');
-const debug = require('debug')('QuickLink');
-const circular = require('circular-json');
+const debug = require('debug')('ReqSession');
 
-const QuickLink = (options) => {
+const RequestSession = (options) => {
   if (typeof options === 'object') {
     if (Boolean(options.debug) === true) {
       debug.enabled = true;
@@ -11,16 +9,17 @@ const QuickLink = (options) => {
     }
   }
   return {
-    label: 'QuickLink',
+    label: 'RequestSession',
     onConnect: (state, action) => {
-      const { req, res } = action;
-      res.json({ hi: 'hi hi hi'});
+      const { req } = action;
+      debug(req.session);
       return state;
     },
     onDisconnect: (state, action) => {
-      const { req, res } = action;
+      const { req } = action;
+      debug(req.session);
       return state;
     }
   };
 };
-module.exports = QuickLink;
+module.exports = RequestSession;

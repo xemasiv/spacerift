@@ -32,6 +32,8 @@ const Spacerift = require('../index.js')({
 const QuickLink = require('./custom-plugins/QuickLink.js');
 
 Spacerift.PLUGINS.push( Spacerift.Fingerprint({ debug: true }) );
+Spacerift.PLUGINS.push( Spacerift.RequestBody({ debug: true }) );
+Spacerift.PLUGINS.push( Spacerift.RequestSession({ debug: true }) );
 Spacerift.PLUGINS.push( QuickLink({ debug: true }) );
 
 app.get('/', (req, res) => {

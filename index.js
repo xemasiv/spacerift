@@ -5,6 +5,8 @@ const Redux = require('redux');
 const debug = require('debug')('Spacerift');
 
 const Fingerprint = require('./plugins/Fingerprint.js');
+const RequestBody = require('./plugins/RequestBody.js');
+const RequestSession = require('./plugins/RequestSession.js');
 
 const Spacerift = (options) => {
 
@@ -19,24 +21,26 @@ const Spacerift = (options) => {
   const PLUGINS = [];
 
   const HTTP = (req, res) => {
-    STORE.dispatch({ type: 'connect', req, res });
-    onFinished(req, () => STORE.dispatch({ type: 'disconnect', req, res }) );
+    STORE.dispatch({ type: 'CONNECT', req, res });
+    onFinished(req, () => STORE.dispatch({ type: 'DISCONNECT', req, res }) );
   };
 
   const STORE = Redux.createStore((state = Immutable.Map({}), action) => {
     debug('ACTION', action.type);
     switch (action.type) {
-      case 'connect':
+      case 'CONNECT':
         PLUGINS.map((plugin, index) => {
           debug(plugin.label, 'plugin', index + 1, 'of', PLUGINS.length);
           state = plugin.onConnect(state, action);
+          debug('STATE', state.toString());
         });
         return state;
         break;
-      case 'disconnect':
+      case 'DISCONNECT':
         PLUGINS.map((plugin, index) => {
           debug(plugin.label, 'plugin', index + 1, 'of', PLUGINS.length);
           state = plugin.onDisconnect(state, action);
+          debug('STATE', state.toString());
         });
         return state;
         break;
@@ -45,7 +49,7 @@ const Spacerift = (options) => {
         break;
     }
   });
-  return { HTTP, PLUGINS, Fingerprint };
+  return { HTTP, PLUGINS, Fingerprint, RequestBody, RequestSession };
 };
 
 module.exports = Spacerift;
