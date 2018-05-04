@@ -38,6 +38,8 @@ const Fingerprint = (options) => {
 
       let fingerprint = getFingerprint(req);
 
+      req.session.fingerprint = fingerprint;
+
       if (state.has('fingerprints') === false) {
         state = state.set('fingerprints', Immutable.List());
       };
@@ -71,6 +73,8 @@ const Fingerprint = (options) => {
       const { req, res } = action;
 
       let fingerprint = getFingerprint(req);
+
+      delete req.session.fingerprint;
 
       let fingerprints = state.get('fingerprints');
       let requests = state.get('requests');
