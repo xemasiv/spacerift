@@ -60,6 +60,19 @@ class HTTPClient {
     */
     return peer;
   }
+  request (body) {
+    debug('HTTPClient.request()', body);
+    let client = this;
+    if (Boolean(client.host) === false) {
+      debug('ERROR', 'Client.host not found');
+      return;
+    }
+    return fetch(client.host, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    });
+  }
 };
 if (typeof window !== 'undefined') {
   window.Immutable = Immutable;

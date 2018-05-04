@@ -27,12 +27,10 @@ Hello!
     type: 'HELLO'
   });
 
-  fetch(window.location.href, {
-    method: 'POST',
-    body: {
-      hi: 'hello'
-    }
-  })
-    .then(console.log)
+  Client.request({
+      hi: 'hello there!'
+    })
+    .then((response) => response.json())
+    .then((response) => console.log(response))
     .catch(console.error);
 </script>

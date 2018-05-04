@@ -30,8 +30,6 @@ const Spacerift = (options) => {
         PLUGINS.map((plugin, index) => {
           debug(plugin.label, 'plugin', index + 1, 'of', PLUGINS.length);
           state = plugin.onConnect(state, action);
-          debug('STATE UPDATED');
-          debug(state.toObject());
         });
         return state;
         break;
@@ -39,8 +37,6 @@ const Spacerift = (options) => {
         PLUGINS.map((plugin, index) => {
           debug(plugin.label, 'plugin', index + 1, 'of', PLUGINS.length);
           state = plugin.onDisconnect(state, action);
-          debug('STATE UPDATED');
-          debug(state.toObject());
         });
         return state;
         break;

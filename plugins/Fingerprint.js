@@ -66,7 +66,7 @@ const Fingerprint = (options) => {
         responses = responses.set(fingerprint, res);
         state = state.set('responses', responses);
       };
-
+      debug(state.toObject());
       return state;
     },
     onDisconnect: (state, action) => {
@@ -92,6 +92,7 @@ const Fingerprint = (options) => {
         responses = responses.delete(fingerprint);
         state = state.set('responses', responses);
       };
+      debug(state.toObject());
       return state;
     }
   };
