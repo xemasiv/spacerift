@@ -2,6 +2,28 @@ const kbpgp = require('kbpgp');
 const debug = require('debug')('KeybasePGP');
 const F = kbpgp["const"].openpgp;
 
+
+/*
+Creating a key:
+request({
+  namespace: 'keybasepgp',
+  action: 'create',
+  userid: 'xemasiv <xemasiv@gmail.com>',
+  passphrase: 'xemasiv'
+}).then(console.log);
+
+Signing a message:
+request({
+  namespace: 'keybasepgp',
+  action: 'sign',
+  public: temp1.pgp_public,
+  private: temp1.pgp_private,
+  passphrase: 'xemasiv',
+  message: 'hello from xemasiv!'
+}).then(console.log);
+*/
+
+
 const create = (userid, passphrase) => new Promise((resolve, reject) => {
   var opts = {
     userid,
