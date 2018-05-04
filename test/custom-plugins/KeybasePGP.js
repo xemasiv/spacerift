@@ -22,15 +22,48 @@ const create = (userid, passphrase) => new Promise((resolve, reject) => {
             resolve({
               userid,
               passphrase,
-              pgp_private,
-              pgp_public
+              private: pgp_private,
+              public: pgp_public
             });
           });
         });
       });
     }
   });
+});
 
+const sign = (public, private, passphrase, message) => new Promise((resolve, reject) => {
+  kbpgp.KeyManager.import_from_armored_pgp({ armored: public }, (err, alice) => {
+    if (Boolean(err) === true) {
+      reject(err);
+    } else {
+      alice.merge_pgp_private({ armored: private }, (err) => {
+        if (Boolean(err) === true) {
+          reject(err);
+        } else {
+          if (alice.is_pgp_locked()) {
+            alice.unlock_pgp({ passphrase: passphrase }, (err) => {
+              if (Boolean(err) === true) {
+                reject(err);
+              } else {
+                debug("Loaded private key with passphrase");
+                var params = { msg: message, sign_with:  alice };
+                kbpgp.box (params, (err, result_string, result_buffer) => {
+                  resolve(result_string);
+                });
+              }
+            });
+          } else {
+            debug("Loaded private key w/o passphrase");
+            var params = { msg: message, sign_with:  alice };
+            kbpgp.box (params, (err, result_string, result_buffer) => {
+              resolve(result_string);
+            });
+          }
+        }
+      });
+    }
+  });
 });
 
 const KeybasePGP = (options) => {
@@ -55,14 +88,27 @@ const KeybasePGP = (options) => {
           if (req.body.namespace !== 'keybasepgp') {
             return;
           }
-          if (req.body.action === 'create') {
-            const { userid, passphrase } = req.body;
-            create(userid, passphrase)
-              .then((result) => {
-                debug(result);
-                res.send(result);
-              })
-              .catch(debug)
+          switch (req.body.action) {
+            case 'create':
+              var { userid, passphrase } = req.body;
+              create(userid, passphrase)
+                .then((result) => {
+                  debug(result);
+                  res.send({result});
+                })
+                .catch(debug)
+              break;
+            case 'sign':
+              var { public, private, passphrase, message } = req.body;
+              sign(public, private, passphrase, message)
+                .then((result) => {
+                  debug(result);
+                  res.send({result});
+                })
+                .catch(debug)
+              break;
+            default:
+              break;
           }
         }
       };
