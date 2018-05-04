@@ -21,6 +21,12 @@ request({
   passphrase: 'xemasiv',
   message: 'hello from xemasiv!'
 }).then(console.log);
+
+Missing:
+- Store public keys in session
+- Loading public keys https://keybase.io/kbpgp/docs/loading_a_key
+- Verify https://keybase.io/kbpgp/docs/decrypting
+- Allowing clients to identify themselves using public keys
 */
 
 
