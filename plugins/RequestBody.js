@@ -1,9 +1,4 @@
-const Immutable = require('immutable');
 const debug = require('debug')('RequestBody');
-const circular = require('circular-json');
-const sha3_256 = require('js-sha3').sha3_256;
-const useragent = require('useragent');
-const geoip = require('geoip-lite');
 
 // TODO:
 // Support client names and namespaces.
