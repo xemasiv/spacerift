@@ -1,7 +1,7 @@
 const onFinished = require('on-finished');
 const Immutable = require('immutable');
 const Redux = require('redux');
-const ReduxThunk = require('redux-thunk').default
+const ReduxThunk = require('redux-thunk').default;
 
 const debug = require('debug')('Spacerift');
 

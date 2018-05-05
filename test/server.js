@@ -29,7 +29,6 @@ const Spacerift = require('../index.js')({
   debug: true
 });
 
-const QuickLink = require('./custom-plugins/QuickLink.js');
 const KeybasePGP = require('./custom-plugins/KeybasePGP.js');
 
 Spacerift.PLUGINS.push( Spacerift.Fingerprint({ debug: true }) );

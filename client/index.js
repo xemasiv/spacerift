@@ -2,9 +2,10 @@ const Peer          = require('simple-peer');
 const EventEmitter3 = require('eventemitter3');
 const Immutable     = require('immutable');
 const Redux         = require('redux');
+const ReduxThunk = require('redux-thunk').default;
 const debug     = require('debug')('Spacerift');
 let REDUCERS = [];
-const STORE = Redux.createStore((state = Immutable.Map({}), action) => {
+const RootReducer = (state = Immutable.Map({}), action) => {
   debug('ACTION', action.type);
   REDUCERS.map((reducer, index) => {
     debug('REDUCER', index + 1, 'of', REDUCERS.length);
@@ -13,7 +14,11 @@ const STORE = Redux.createStore((state = Immutable.Map({}), action) => {
     debug(state.toString());
   });
   return state;
-});
+};
+const STORE = Redux.createStore(
+  RootReducer,
+  Redux.applyMiddleware(ReduxThunk)
+);
 class HTTPClient {
   constructor (options) {
     debug('HTTPClient.constructor()', options);
@@ -65,14 +70,15 @@ class HTTPClient {
     let client = this;
     if (Boolean(client.host) === false) {
       debug('ERROR', 'Client.host not found');
-      return;
+      return Promise.reject('Spacerift HTTPClient \'host\' missing.');
     }
-    return fetch(client.host, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(body)
-    })
-    .then((response) => response.json());
+    let params = {};
+    params.method = 'POST';
+    params.headers = { 'Content-Type': 'application/json' };
+    if (Object.prototype.isPrototypeOf(body) === true) {
+      params.body = JSON.stringify(body);
+    };
+    return fetch(client.host, params).then((r) => r.json());
   }
 };
 if (typeof window !== 'undefined') {
